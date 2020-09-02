@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Hero from '../components/Hero'
 import Banner from '../components/Banner'
-
+import Services from '../components/Services'
 export default function Home() {
     return (
         <div>
@@ -11,6 +11,7 @@ export default function Home() {
                     <Link to="rooms" className="btn-primary">Check Rooms</Link>
                 </Banner>
             </Hero>
+            <Services />
         </div>
     )
 }
