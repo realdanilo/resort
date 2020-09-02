@@ -13,25 +13,23 @@ import items from './data'
 
 function App() {
   const [loading, setLoading] = useState(true)
-  const [rooms, setRooms] = useState([])
-  const [sortedRooms, setSortedRooms] = useState([])
-  const [featuredRooms, setFeaturedRooms] = useState([])
+  const [rooms, setRooms] = useState(null)
+  const [sortedRooms, setSortedRooms] = useState(null)
+  const [featuredRooms, setFeaturedRooms] = useState(null)
 
   useEffect(() => {
-    setRooms(formatData(items))
-    setSortedRooms(formatData(items))
-    setFeaturedRooms(rooms.filter(r => r.featured === true))
+    let cleanData = formatData(items)
+    setRooms(cleanData)
+    setSortedRooms(cleanData)
+    setFeaturedRooms(cleanData.filter(r => r.featured === true))
     setLoading(false)
-
   }, [])
 
   const formatData = (items) => {
     let temp = items.map(item => {
       let id = item.sys.id
       let images = item.fields.images.map(img => img.fields.file.url)
-
       return { ...item.fields, id, images }
-
     })
     return temp
   }
