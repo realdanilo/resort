@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Hero from '../components/Hero'
 import Banner from '../components/Banner'
+import RoomContainer from '../components/RoomContainer'
+
 export default function Rooms() {
     return (
         <div>
@@ -10,6 +12,7 @@ export default function Rooms() {
                     <Link to="/" className="btn-primary">Home</Link>
                 </Banner>
             </Hero>
+            <RoomContainer />
         </div>
     )
 }
