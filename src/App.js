@@ -33,6 +33,14 @@ function App() {
     })
     return temp
   }
+  const getRoom = (slug) => {
+    if (rooms) {
+      return rooms.find(room => room.slug === slug)
+    }
+    else {
+      return items.find(room => room.fields.slug === slug)
+    }
+  }
   return (
     <RoomContext.Provider value={{ loading, rooms, sortedRooms, featuredRooms }}>
 
@@ -40,7 +48,7 @@ function App() {
       <Switch>
         <Route exact path="/" render={(rp) => <Home {...rp} />} />
         <Route exact path="/rooms" render={(rp) => <Rooms {...rp} />} />
-        <Route exact path="/rooms/:id" render={(rp) => <SingleRoom {...rp} />} />
+        <Route exact path="/rooms/:slug" render={(rp) => <SingleRoom {...rp} room={getRoom(rp.match.params.slug)} />} />
         <Route path="/" render={(rp) => <Error {...rp} />} />
       </Switch>
     </RoomContext.Provider>
