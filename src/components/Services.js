@@ -7,22 +7,22 @@ export default function Services() {
         {
             icon: <FaCocktail />,
             title: "Free cocktails",
-            info: "lorem 123 fsdoinas asd ionsda dasn osidasd"
+            info: "Free cocktails for the first 10 adults every monday after 10pm."
         },
         {
             icon: <FaHiking />,
             title: "Hiking Mountains",
-            info: "lorem 123 fsdoinas asd ionsda dasn osidasd"
+            info: "We offer a great view to hike mountains right outside your room."
         },
         {
             icon: <FaShuttleVan />,
             title: "Free Shuttle",
-            info: "lorem 123 fsdoinas asd ionsda dasn osidasd"
+            info: "Shuttle is next to the green house and we give a free pass for members that stay over 2 weeks"
         },
         {
             icon: <FaBeer />,
             title: "Strongest Beer",
-            info: "lorem 123 fsdoinas asd ionsda dasn osidasd"
+            info: "Yep. We have the best beer also."
         },
     ]
     return (

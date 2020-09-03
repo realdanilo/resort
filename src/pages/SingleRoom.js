@@ -25,6 +25,7 @@ export default function SingleRoom(props) {
                     </article>
                     <article className="info">
                         <h3>Info</h3>
+                        <h6>Type: {type}</h6>
                         <h6>Price: ${price}</h6>
                         <h6>Size: {size} sqft</h6>
                         <h6>Max Capacity: {capacity > 1 ? `${capacity} people` : `${capacity} person`} </h6>

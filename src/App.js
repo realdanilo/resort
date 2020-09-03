@@ -23,7 +23,7 @@ function App() {
     setSortedRooms(cleanData)
     setFeaturedRooms(cleanData.filter(r => r.featured === true))
     setLoading(false)
-  }, [])
+  }, [""])
 
   const formatData = (items) => {
     let temp = items.map(item => {
@@ -34,11 +34,12 @@ function App() {
     return temp
   }
   const getRoom = (slug) => {
-    if (rooms) {
+    if (rooms != null) {
       return rooms.find(room => room.slug === slug)
     }
     else {
-      return items.find(room => room.fields.slug === slug)
+      let backUp = formatData(items)
+      return backUp.find(room => room.slug === slug)
     }
   }
   return (
