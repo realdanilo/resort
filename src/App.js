@@ -36,13 +36,23 @@ const initialState = {
   pets: false,
   price: Math.max(...formatData(items).map(r => r.price))
 }
+//reducer
 const reducer = (state, action) => {
   switch (action.type) {
     case "FILTER":
-      let tempRooms;
-      [action.newValue] == "all" ? tempRooms = [...state.rooms] : tempRooms = [...state.rooms].filter(room => room.type == [action.newValue])
-      let newState = { ...state, [action.changeProp]: action.newValue, sortedRooms: tempRooms }
-      return newState
+      let tempRooms = [...state.rooms]
+      console.log(action.newValue, typeof (action.newValue))
+      if (action.newValue !== "all" && typeof (action.newValue) == "string") {
+        console.log("changing type of room")
+        tempRooms = tempRooms.filter(room => room.type == action.newValue);
+      }
+      if (action.newValue >= 0 && typeof (action.newValue) == "number") {
+        console.log("changing min # of guess")
+        tempRooms = tempRooms.filter(room => room.capacity >= action.newValue)
+      }
+
+      console.log(tempRooms)
+      return { ...state, [action.changeProp]: action.newValue, sortedRooms: tempRooms }
     default:
       return state
   }
