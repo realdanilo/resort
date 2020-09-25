@@ -11,7 +11,7 @@ export default function RoomList({ rooms }) {
                     {rooms.map(r => <Room key={r.id} room={r} />)}
                 </div>
             </section>}
-            {!rooms && <div className="empty-search">  <h4>No rooms match your search</h4></div>}
+            {rooms.length == 0 && <div className="empty-search">  <h4>No rooms match your search</h4></div>}
 
         </div>
     )
