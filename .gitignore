@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+# keys
+contentful.js
 
 # production
 /build

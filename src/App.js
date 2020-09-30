@@ -1,5 +1,5 @@
 //Modules
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom'
 import './App.css';
 //Components
@@ -9,9 +9,51 @@ import Rooms from './pages/Rooms'
 import SingleRoom from './pages/SingleRoom'
 import Navbar from './components/Navbar'
 import { RoomContext } from './context'
-import items from './data'
+// import items from './data'
+import client from "./contentful"
+import { reducer } from './reducer'
 
 
+let initialState = {
+  rooms: [],
+  sortedRooms: [],
+  featuredRooms: [],
+  loading: true,
+  type: "all",
+  capacity: 1,
+  price: 0,
+  minPrice: 0,
+  maxPrice: 0,
+  minSize: 0,
+  maxSize: 0,
+  breakfast: false,
+  pets: false
+};
+let items;
+
+//getData
+const getData = async () => {
+  let response = await client.getEntries({ content_type: "beachRooms" });
+  items = response.items;
+  console.log(items)
+  initialState = {
+    loading: false,
+    rooms: formatData(items),
+    sortedRooms: formatData(items),
+    featuredRooms: formatData(items).filter(r => r.featured === true),
+    type: 'all',
+    capacity: 0,
+    minPrice: 0,
+    maxPrice: Math.max(...formatData(items).map(r => r.price)),
+    minSize: 0,
+    maxSize: Math.max(...formatData(items).map(r => r.size)),
+    breakfast: false,
+    pets: false,
+    price: Math.max(...formatData(items).map(r => r.price))
+  }
+}
+
+// format data
 const formatData = (items) => {
   let temp = items.map(item => {
     let id = item.sys.id
@@ -20,69 +62,12 @@ const formatData = (items) => {
   })
   return temp
 }
-//Initial State
-const initialState = {
-  loading: false,
-  rooms: formatData(items),
-  sortedRooms: formatData(items),
-  featuredRooms: formatData(items).filter(r => r.featured === true),
-  type: 'all',
-  capacity: 0,
-  minPrice: 0,
-  maxPrice: Math.max(...formatData(items).map(r => r.price)),
-  minSize: 0,
-  maxSize: Math.max(...formatData(items).map(r => r.size)),
-  breakfast: false,
-  pets: false,
-  price: Math.max(...formatData(items).map(r => r.price))
-}
-//reducer
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "UPDATE":
-      return { ...state, ...action.newFilter }
-    case "FILTER":
-      let tempRooms = [...state.rooms]
-      let { type, capacity, price, minSize, maxSize, breakfast, pets } = state;
-      capacity = parseInt(capacity);
-      price = parseInt(price);
-      let breakfastCheck = breakfast;
-      let petsCheck = pets;
-
-      // filter by type
-      if (type !== "all") {
-        tempRooms = tempRooms.filter(room => room.type === type);
-      }
-      // filter by capacity
-      if (capacity !== 1) {
-        tempRooms = tempRooms.filter(room => room.capacity >= capacity);
-      }
-      // filter by price
-      tempRooms = tempRooms.filter(room => room.price <= price);
-      //filter by size
-      tempRooms = tempRooms.filter(
-        room => room.size >= minSize && room.size <= maxSize
-      );
-      //filter by breakfast
-      if (breakfast) {
-        tempRooms = tempRooms.filter(room => room.breakfast === true);
-      }
-      //filter by pets
-      if (pets) {
-        tempRooms = tempRooms.filter(room => room.pets === true);
-      }
-
-      return { ...state, sortedRooms: tempRooms, breakfast: breakfastCheck, pets: petsCheck }
-    default:
-      return state
-  }
-}
-
 
 function App() {
-  // using reducer
-  const [state, dispatch] = useReducer(reducer, initialState)
 
+  //useReducer
+  const [state, dispatch] = useReducer(reducer, getData())
+  console.log(state)
 
   //finding and returning a room
   const getRoom = (slug) => {
