@@ -8,7 +8,6 @@
 # testing
 /coverage
 # keys
-contentful.js
 .env.development
 # production
 /build
