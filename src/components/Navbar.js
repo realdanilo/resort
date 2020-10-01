@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { AiOutlineMenu } from 'react-icons/ai'
 import logo from '../images/logo.svg'
 
-export default function Navbar() {
+function Navbar() {
     const [toggleMenu, setToggleMenu] = useState(false)
     return (
         <nav className="navbar" >
@@ -22,4 +22,4 @@ export default function Navbar() {
         </nav >
     )
 }
-//<NavLink to="/faq" activeClassName="selected">FAQs</NavLink>
+export default memo(Navbar)

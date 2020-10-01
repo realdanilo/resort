@@ -1,5 +1,5 @@
 //Modules
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect, memo } from 'react';
 import { Switch, Route } from 'react-router-dom'
 import './App.css';
 //Components
@@ -8,10 +8,10 @@ import Error from './pages/Error'
 import Rooms from './pages/Rooms'
 import SingleRoom from './pages/SingleRoom'
 import Navbar from './components/Navbar'
-import { RoomContext } from './context'
 // import items from './data'
 import client from "./contentful"
 import { reducer } from './reducer'
+import { RoomContext, DispatchContext } from './context'
 
 
 let initialState = {
@@ -73,27 +73,29 @@ function App() {
       dispatch({ type: "INIT", init })
     }
     loadFirst()
-  }, [])
-  console.log("loading")
 
+  }, [])
   //finding and returning a room
   const getRoom = (slug) => {
     return state.rooms.find(room => room.slug === slug)
   }
 
   return (
-    <RoomContext.Provider value={{ state, dispatch }}>
 
+    <DispatchContext.Provider value={dispatch} >
       <Navbar />
-      <Switch>
-        <Route exact path="/" render={(rp) => <Home {...rp} />} />
-        <Route exact path="/rooms" render={(rp) => <Rooms {...rp} rooms={state.rooms} />} />
-        <Route exact path="/rooms/:slug" render={(rp) => <SingleRoom {...rp} room={getRoom(rp.match.params.slug)} />} />
-        <Route path="/" render={(rp) => <Error {...rp} />} />
-      </Switch>
-    </RoomContext.Provider>
+      <RoomContext.Provider value={state}>
+        <Switch>
+          <Route exact path="/" render={(rp) => <Home {...rp} />} />
+          <Route exact path="/rooms" render={(rp) => <Rooms {...rp} rooms={state.rooms} />} />
+          <Route exact path="/rooms/:slug" render={(rp) => <SingleRoom {...rp} room={getRoom(rp.match.params.slug)} />} />
+          <Route path="/" render={(rp) => <Error {...rp} />} />
+        </Switch>
+      </RoomContext.Provider>
+    </DispatchContext.Provider>
+
 
   );
 }
 
-export default App;
+export default memo(App);

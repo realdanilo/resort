@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import Room from './Room'
 
-export default function RoomList({ rooms }) {
-
+function RoomList({ rooms }) {
     return (
         <div>
 
@@ -16,3 +15,4 @@ export default function RoomList({ rooms }) {
         </div>
     )
 }
+export default memo(RoomList)

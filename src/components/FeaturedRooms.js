@@ -5,7 +5,7 @@ import Room from './Room'
 import Title from './Title'
 
 export default function FeaturedRooms() {
-    const { state } = useContext(RoomContext)
+    const state = useContext(RoomContext)
     const { featuredRooms, loading } = state
     return (
         <section className="featured-rooms">

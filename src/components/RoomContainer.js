@@ -4,7 +4,7 @@ import RoomList from './RoomList'
 import { RoomContext } from '../context'
 
 export default function RoomContainer() {
-    const { state } = useContext(RoomContext)
+    const state = useContext(RoomContext)
     const { loading, rooms, sortedRooms } = state
     return (
         <div>

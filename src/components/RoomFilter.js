@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import { RoomContext } from '../context'
+import { RoomContext, DispatchContext } from '../context'
+
 import Title from './Title'
 
 const findUnique = (items, type) => {
@@ -7,7 +8,8 @@ const findUnique = (items, type) => {
 }
 
 export default function RoomFilter({ rooms }) {
-    const { state, dispatch } = useContext(RoomContext)
+    const state = useContext(RoomContext)
+    const dispatch = useContext(DispatchContext)
     const { type, capacity, minPrice, maxPrice, minSize, maxSize, size, price, breakfast, pets } = state
     const uniqueSelectors = findUnique(rooms, "type").concat("all")
     const people = findUnique(rooms, "capacity")

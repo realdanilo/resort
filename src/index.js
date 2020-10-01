@@ -6,11 +6,14 @@ import ScrollToTop from './ScrollToTop'
 
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom'
+
 ReactDOM.render(
+
   <BrowserRouter>
     <ScrollToTop />
     <App />
-  </BrowserRouter>,
+  </BrowserRouter>
+  ,
   document.getElementById('root')
 );
 
