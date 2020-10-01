@@ -33,7 +33,7 @@ let items;
 
 //getData
 const getData = async () => {
-  let response = await client.getEntries({ content_type: "beachRooms" });
+  let response = await client.getEntries({ content_type: "beachRooms", order: "fields.price" });
   items = response.items;
   return initialState = {
     loading: false,
