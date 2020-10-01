@@ -1,5 +1,7 @@
 export const reducer = (state, action) => {
     switch (action.type) {
+        case "INIT":
+            return { ...action.init }
         case "UPDATE":
             return { ...state, ...action.newFilter }
         case "FILTER":

@@ -35,21 +35,20 @@ let items;
 const getData = async () => {
   let response = await client.getEntries({ content_type: "beachRooms" });
   items = response.items;
-  console.log(items)
-  initialState = {
+  return initialState = {
     loading: false,
-    rooms: formatData(items),
-    sortedRooms: formatData(items),
-    featuredRooms: formatData(items).filter(r => r.featured === true),
+    rooms: formatData(response.items),
+    sortedRooms: formatData(response.items),
+    featuredRooms: formatData(response.items).filter(r => r.featured === true),
     type: 'all',
     capacity: 0,
     minPrice: 0,
-    maxPrice: Math.max(...formatData(items).map(r => r.price)),
+    maxPrice: Math.max(...formatData(response.items).map(r => r.price)),
     minSize: 0,
-    maxSize: Math.max(...formatData(items).map(r => r.size)),
+    maxSize: Math.max(...formatData(response.items).map(r => r.size)),
     breakfast: false,
     pets: false,
-    price: Math.max(...formatData(items).map(r => r.price))
+    price: Math.max(...formatData(response.items).map(r => r.price))
   }
 }
 
@@ -66,8 +65,16 @@ const formatData = (items) => {
 function App() {
 
   //useReducer
-  const [state, dispatch] = useReducer(reducer, getData())
-  console.log(state)
+  const [state, dispatch] = useReducer(reducer, initialState)
+
+  useEffect(() => {
+    const loadFirst = async () => {
+      let init = await getData()
+      dispatch({ type: "INIT", init })
+    }
+    loadFirst()
+  }, [])
+  console.log("loading")
 
   //finding and returning a room
   const getRoom = (slug) => {
